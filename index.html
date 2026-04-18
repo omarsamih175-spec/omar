@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Aya 🌙</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Tajawal:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-space: #04050f;
+            --midnight: #080c1a;
+            --nebula-purple: #6b3fa0;
+            --nebula-blue: #1a3a6b;
+            --star-gold: #f5d77e;
+            --rose-stardust: #d4768a;
+            --moonlight: #e8e0f5;
+            --cosmic-pink: #c47ab5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+        body {
+            min-height: 100vh;
+            background: var(--deep-space);
+            font-family: 'Cormorant Garamond', serif;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--star-gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px var(--star-gold), 0 0 30px rgba(245, 215, 126, 0.4);
+            transition: transform 0.15s ease;
+        }
+        .cursor-trail {
+            width: 6px;
+            height: 6px;
+            background: var(--cosmic-pink);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Star canvas */
+        #starfield {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+
+        /* Nebula background layers */
+.nebula { position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0; }
+        .nebula-1 { width:800px;height:800px;background:radial-gradient(circle,rgba(107,63,160,.35) 0%,transparent 70%);top:-300px;left:-200px;animation:nb 12s ease-in-out infinite; }
+        .nebula-2 { width:600px;height:600px;background:radial-gradient(circle,rgba(196,122,181,.28) 0%,transparent 70%);bottom:-200px;right:-100px;animation:nb 9s ease-in-out infinite reverse; }
+        .nebula-3 { width:500px;height:500px;background:radial-gradient(circle,rgba(107,63,160,.25) 0%,transparent 70%);top:50%;left:60%;animation:nb 15s ease-in-out infinite; }
+        .nebula-4 { width:400px;height:400px;background:radial-gradient(circle,rgba(180,80,200,.2) 0%,transparent 70%);top:30%;left:10%;animation:nb 11s ease-in-out infinite reverse; }
+        .nebula-5 { width:350px;height:350px;background:radial-gradient(circle,rgba(107,63,160,.22) 0%,transparent 70%);bottom:20%;left:40%;animation:nb 14s ease-in-out infinite; }
+        @keyframes nb{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+        @keyframes floatHeart{0%{transform:translateY(100vh) rotate(0deg);opacity:.7}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+        @keyframes nebulaPulse { 0%,100%{opacity:.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.1)} }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Main content */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 700px;
+        }
+
+        .moon-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1.5rem;
+            animation: moonGlow 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(245, 215, 126, 0.6));
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(245, 215, 126, 0.5)); }
+            50% { filter: drop-shadow(0 0 35px rgba(245, 215, 126, 0.9)); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 400;
+            color: var(--moonlight);
+            letter-spacing: 0.15em;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInDown 1.5s ease 0.5s forwards;
+            text-shadow: 0 0 40px rgba(232, 224, 245, 0.4);
+        }
+
+        h1 span {
+            color: var(--star-gold);
+            font-style: italic;
+        }
+
+        .greeting {
+            font-family: 'Tajawal', sans-serif;
+            font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+            color: rgba(232, 224, 245, 0.85);
+            font-style: normal;
+            font-weight: 300;
+            line-height: 2.3;
+            margin-bottom: 2rem;
+            min-height: 3em;
+            direction: rtl;
+            text-align: center;
+        }
+
+        .arabic-whisper {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.1rem;
+            color: var(--cosmic-pink);
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 5.5s forwards;
+            direction: rtl;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 0.03em;
+            color: var(--deep-space);
+            background: linear-gradient(135deg, var(--star-gold) 0%, #f0c860 50%, var(--star-gold) 100%);
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 1s ease 4s forwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            box-shadow: 0 0 30px rgba(245, 215, 126, 0.3);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before { left: 100%; }
+        .cta-button:hover {
+            box-shadow: 0 0 50px rgba(245, 215, 126, 0.6);
+            transform: translateY(-3px);
+        }
+
+        /* Floating star particles */
+        .star-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-300px) rotate(360deg); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Decorative line */
+        .deco-line {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--star-gold), transparent);
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 2s forwards;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+    <div class="nebula nebula-4"></div>
+    <div class="nebula nebula-5"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-trail" id="cursorTrail"></div>
+
+    <div class="container">
+        <span class="moon-icon">🌙</span>
+        <h1>For <span>Aya</span></h1>
+        <div class="deco-line"></div>
+        <div class="greeting" id="greeting"></div>
+        <div class="arabic-whisper">انتي كوني و كلشي بدي اياه بحياتي 🌙</div>
+        <button class="cta-button" id="enterBtn">احكيلك ليش انتي كلشي عندي 🌌</button>
+    </div>
+
+    <script>
+// ── Shared background: stars + canvas hearts + shooting stars + floating hearts ──
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const stars = Array.from({length: 420}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2 + 0.2,
+            alpha: Math.random(),
+            speed: Math.random() * 0.004 + 0.001,
+            color: ['#f5d77e','#e8e0f5','#c47ab5','#ffffff','#a855f7','#d8b4fe','#9333ea','#c084fc'][Math.floor(Math.random()*8)]
+        }));
+
+        const canvasHearts = Array.from({length: 18}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 8 + 4,
+            alpha: Math.random() * 0.4 + 0.1,
+            speed: Math.random() * 0.003 + 0.001,
+            dy: -(Math.random() * 0.3 + 0.1),
+            color: ['#c47ab5','#a855f7','#d4768a','#e879f9'][Math.floor(Math.random()*4)]
+        }));
+
+        function drawHeart(cx, cy, size, color, alpha) {
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy + size * 0.3);
+            ctx.bezierCurveTo(cx, cy, cx - size, cy, cx - size, cy + size * 0.5);
+            ctx.bezierCurveTo(cx - size, cy + size, cx, cy + size * 1.35, cx, cy + size * 1.5);
+            ctx.bezierCurveTo(cx, cy + size * 1.35, cx + size, cy + size, cx + size, cy + size * 0.5);
+            ctx.bezierCurveTo(cx + size, cy, cx, cy, cx, cy + size * 0.3);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        (function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                s.alpha += s.speed;
+                if (s.alpha > 1 || s.alpha < 0.1) s.speed *= -1;
+                ctx.globalAlpha = Math.max(0.1, Math.min(1, s.alpha));
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            canvasHearts.forEach(h => {
+                h.alpha += h.speed;
+                if (h.alpha > 0.5 || h.alpha < 0.05) h.speed *= -1;
+                h.y += h.dy;
+                if (h.y < -20) { h.y = canvas.height + 20; h.x = Math.random() * canvas.width; }
+                drawHeart(h.x, h.y, h.size, h.color, h.alpha);
+            });
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(draw);
+        })();
+
+        // Floating emoji hearts
+        const heartEmojis = ['💜','💜','💜','🌙','✨','💫','🌟','💜','💕','💖'];
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.style.cssText = `position:fixed;pointer-events:none;z-index:2;font-size:${10+Math.random()*18}px;left:${Math.random()*100}vw;animation:floatHeart ${6+Math.random()*8}s ${Math.random()*2}s linear infinite;`;
+            h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 14000);
+        }
+        for (let i = 0; i < 14; i++) setTimeout(spawnHeart, i * 400);
+        setInterval(spawnHeart, 1400);
+
+        // Shooting stars
+        function shoot() {
+            const el = document.createElement('div');
+            el.style.cssText = `position:fixed;width:2px;height:2px;background:white;border-radius:50%;z-index:1;pointer-events:none;left:${Math.random()*window.innerWidth}px;top:${Math.random()*window.innerHeight*.4}px`;
+            document.body.appendChild(el);
+            const d = 250 + Math.random() * 250;
+            el.animate([
+                {transform:'translate(0,0)',opacity:1,width:'2px',boxShadow:'0 0 4px white'},
+                {transform:`translate(${d*.7}px,${d*.4}px)`,opacity:0,width:'60px',boxShadow:'0 0 10px white,0 0 20px rgba(245,215,126,.6)'}
+            ],{duration:700+Math.random()*400,easing:'ease-out'}).onfinish=()=>el.remove();
+        }
+        setInterval(shoot, 2500);
+
+        // Shooting stars
+        function createShootingStar() {
+            const el = document.createElement('div');
+            el.className = 'shooting-star';
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight * 0.5;
+            el.style.cssText = `left:${startX}px;top:${startY}px;`;
+            document.body.appendChild(el);
+            const angle = 30 + Math.random() * 20;
+            const dist = 200 + Math.random() * 300;
+            el.animate([
+                { transform: 'translate(0,0)', opacity: 1, width: '2px', boxShadow: '0 0 4px white' },
+                { transform: `translate(${dist * Math.cos(angle * Math.PI/180)}px, ${dist * Math.sin(angle * Math.PI/180)}px)`, opacity: 0, width: `${40 + Math.random()*60}px`, boxShadow: '0 0 8px white, 0 0 20px rgba(245,215,126,0.8)' }
+            ], { duration: 800 + Math.random() * 600, easing: 'ease-out' }).onfinish = () => el.remove();
+        }
+        setInterval(createShootingStar, 2500);
+
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        const trail = document.getElementById('cursorTrail');
+        let mx = 0, my = 0;
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = (mx - 6) + 'px';
+            cursor.style.top = (my - 6) + 'px';
+            setTimeout(() => {
+                trail.style.left = (mx - 3) + 'px';
+                trail.style.top = (my - 3) + 'px';
+            }, 100);
+        });
+
+        // Typing effect - Arabic text typed RTL
+        const lines = ["ايةةةة، بتعرفي انك الكون بالنسبة الي صح؟ 🌙", "انتي كوني و كلشي بدي اياه بحياتي 💜"];
+        const el = document.getElementById('greeting');
+        let lineIdx = 0, charIdx = 0;
+
+        setTimeout(() => {
+            function type() {
+                if (lineIdx < lines.length) {
+                    if (charIdx < lines[lineIdx].length) {
+                        if (charIdx === 0 && lineIdx > 0) {
+                            el.innerHTML += '<br>';
+                        }
+                        el.innerHTML = el.innerHTML.replace(/▎$/, '') + lines[lineIdx][charIdx] + '▎';
+                        charIdx++;
+                        setTimeout(type, 75);
+                    } else {
+                        el.innerHTML = el.innerHTML.replace(/▎$/, '');
+                        lineIdx++;
+                        charIdx = 0;
+                        setTimeout(type, 600);
+                    }
+                } else {
+                    el.innerHTML = el.innerHTML.replace(/▎$/, '');
+                }
+            }
+            type();
+        }, 1500);
+
+        // Floating particles on click
+        document.addEventListener('click', e => {
+            const emojis = ['✨', '🌟', '💫', '⭐', '🌙'];
+            const p = document.createElement('div');
+            p.className = 'star-particle';
+            p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            p.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;font-size:${16+Math.random()*14}px;animation-duration:${1.5+Math.random()}s;`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 2500);
+        });
+
+        // Button
+        document.getElementById('enterBtn').addEventListener('click', () => {
+            document.body.animate([{opacity:1},{opacity:0}], {duration:800, fill:'forwards'}).onfinish = () => {
+                window.location.href = 'two.html';
+            };
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
